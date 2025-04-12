@@ -1,0 +1,16 @@
+├───.vscode
+├───ayucare
+│   ├───exercise
+│   │   ├───backend
+│   │   └───images
+│   ├───food
+│   ├───foodtracker
+│   ├───meditation
+│   ├───shop
+│   │   └───images
+│   └───yoga
+├───AyuCare_HealthJournal
+│   └───.vscode
+└───AyuCare_Scanner
+    ├───.vscode
+    └───model
