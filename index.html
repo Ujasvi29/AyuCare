@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AyuCare Plant Scanner</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@3.21.0/dist/tf.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@0.8/dist/teachablemachine-image.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0fff0;
+      text-align: center;
+      padding: 20px;
+    }
+    video {
+      border: 2px solid green;
+      border-radius: 8px;
+      width: 300px;
+      height: auto;
+      margin-top: 10px;
+    }
+    #result {
+      font-size: 1.2em;
+      color: darkgreen;
+      margin-top: 15px;
+    }
+  </style>
+</head>
+<body>
+  <h1>🌿 AyuCare Plant Scanner</h1>
+  <p>Scan any Ayurvedic plant leaf using your webcam</p>
+  <video id="webcam" autoplay playsinline></video>
+  <br />
+  <button onclick="init()">Start Scanner</button>
+  <div id="result">Result will appear here</div>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AyuCare - Wellness Hub</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@3.21.0/dist/tf.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@0.8/dist/teachablemachine-image.min.js"></script>
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.1); opacity: 0.7; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    .pulse-animation {
+      animation: pulse 1s infinite;
+    }
+
+    /* Scanner styling */
+    #scanner-section video {
+      width: 100%;
+      border-radius: 12px;
+      margin-bottom: 10px;
+    }
+    #scanner-section button {
+      padding: 10px 20px;
+      background-color: #4caf50;
+      color: white;
+      font-size: 16px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body class="bg-green-50 min-h-screen p-6">
+
+  <!-- App Title -->
+  <div class="text-center mb-6">
+    <h1 class="text-3xl font-bold text-green-800 mb-2">🌿 AyuCare</h1>
+    <p class="text-green-600">Your daily guide to natural healing and harmony</p>
+  </div>
+
+  <!-- Top Nav Buttons -->
+  <div class="flex flex-wrap justify-center gap-3 mb-6">
+    <a href="yoga/yoga.html" class="bg-white border border-green-300 text-green-800 px-4 py-2 rounded-full shadow hover:bg-green-100 text-sm">🧘 Yoga</a>
+    <a href="meditation/meditation.html" class="bg-white border border-green-300 text-green-800 px-4 py-2 rounded-full shadow hover:bg-green-100 text-sm">🧘‍♂️ Meditation</a>
+    <a href="shop/shop.html" class="bg-white border border-green-300 text-green-800 px-4 py-2 rounded-full shadow hover:bg-green-100 text-sm">🛍️ Shop</a>
+    <a href="shop/cart.html" class="bg-white border border-green-300 text-green-800 px-4 py-2 rounded-full shadow hover:bg-green-100 text-sm">🛒 Cart</a>
+    <a href="exercise/exercise.html" class="bg-white border border-green-300 text-green-800 px-4 py-2 rounded-full shadow hover:bg-green-100 text-sm">🏃 Exercises</a>
+    <a href="foodtracker/foodtracker.html" class="bg-white border border-green-300 text-green-800 px-4 py-2 rounded-full shadow hover:bg-green-100 text-sm">🍽️ Food Tracker</a>
+  </div>
+
+  <!-- Chatbot Section with Animated Mic + Scanner Button -->
+  <div class="max-w-2xl mx-auto">
+    <div class="flex justify-center mb-4 gap-3">
+      <button id="start-record" class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-full shadow-lg text-lg transition duration-300 ease-in-out">
+        🎤 Speak to AyuBot
+      </button>
+      <button id="open-scanner" class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-full shadow-lg text-lg transition duration-300 ease-in-out">
+        🔍 Plant Scanner
+      </button>
+    </div>
+
+    <!-- Embedded Chatbot Iframe -->
+    <div class="rounded-2xl overflow-hidden shadow-md border border-green-200">
+      <iframe
+        id="chatbot-container"
+        src="https://www.chatbase.co/chatbot-iframe/VF51iYmLkK70RCEWl2JbQ"
+        width="100%"
+        height="500"
+        style="border: none;"
+        allow="microphone;"
+      ></iframe>
+    </div>
+  </div>
+
+  <!-- Plant Scanner Section -->
+  <div id="scanner-section" class="hidden max-w-xl mx-auto mt-6 bg-white p-4 rounded-xl shadow border border-green-200">
+    <h2 class="text-xl font-semibold text-green-800 mb-2">🌿 Plant Scanner</h2>
+    <p class="text-sm text-green-600 mb-4">Scan an Ayurvedic plant leaf using your webcam.</p>
+    <video id="webcam" autoplay playsinline></video>
+    <button onclick="init()">Start Scanner</button>
+    <div id="result" class="text-green-700 font-medium mt-3">Result will appear here</div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="text-center mt-10 text-sm text-green-700">
+    Made with 🌿 by the AyuCare Team
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    const chatbot = document.getElementById("chatbot-container");
+    const micBtn = document.getElementById("start-record");
+
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+    if (SpeechRecognition) {
+      const recognition = new SpeechRecognition();
+      recognition.lang = 'en-IN';
+      recognition.continuous = false;
+      recognition.interimResults = false;
+
+      micBtn.onclick = () => {
+        recognition.start();
+        micBtn.classList.add("pulse-animation");
+        micBtn.innerText = "🎤 Listening...";
+      };
+
+      recognition.onresult = (event) => {
+        const speechText = event.results[0][0].transcript;
+        sendToBot(speechText);
+        resetMicButton();
+      };
+
+      recognition.onerror = (event) => {
+        alert("Speech recognition error: " + event.error);
+        resetMicButton();
+      };
+
+      recognition.onend = () => {
+        resetMicButton();
+      };
+    }
+
+    function resetMicButton() {
+      micBtn.classList.remove("pulse-animation");
+      micBtn.innerText = "🎤 Speak to AyuBot";
+    }
+
+    function sendToBot(query) {
+      if (chatbot.contentWindow) {
+        chatbot.contentWindow.postMessage({ sender: 'user', message: query }, '*');
+      } else {
+        chatbot.onload = () => {
+          chatbot.contentWindow.postMessage({ sender: 'user', message: query }, '*');
+        };
+      }
+    }
+
+    // Show/hide plant scanner
+    document.getElementById("open-scanner").addEventListener("click", () => {
+      const section = document.getElementById("scanner-section");
+      section.classList.toggle("hidden");
+    });
+
+    // Plant Scanner Script
+    let model, webcam, maxPredictions;
+
+    async function init() {
+      const MODEL_URL = "https://teachablemachine.withgoogle.com/models/DO477GJ3YJ/";
+      const modelURL = MODEL_URL + "model.json";
+      const metadataURL = MODEL_URL + "metadata.json";
+
+      try {
+        model = await tmImage.load(modelURL, metadataURL);
+        maxPredictions = model.getTotalClasses();
+
+        const flip = true;
+        webcam = new tmImage.Webcam(300, 300, flip);
+        await webcam.setup();
+        await webcam.play();
+        window.requestAnimationFrame(loop);
+
+        document.getElementById("webcam").srcObject = webcam.webcam;
+      } catch (error) {
+        console.error("Failed to load model or webcam", error);
+        document.getElementById("result").innerHTML = "Error loading model/webcam.";
+      }
+    }
+
+    async function loop() {
+      webcam.update();
+      await predict();
+      window.requestAnimationFrame(loop);
+    }
+
+    async function predict() {
+      const prediction = await model.predict(webcam.canvas);
+      prediction.sort((a, b) => b.probability - a.probability);
+      document.getElementById("result").innerHTML =
+        `🌿 Detected: ${prediction[0].className} (${(prediction[0].probability * 100).toFixed(2)}%)`;
+    }
+  </script>
+</body>
+</html>

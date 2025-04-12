@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AyuCare Shop</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-green-50 text-green-900 p-6 relative">
+
+  <!-- 🛒 Cart Icon with Count -->
+  <a href="cart.html" id="cartIcon" class="fixed top-5 right-5 bg-green-200 hover:bg-green-300 px-4 py-2 rounded-full shadow text-lg font-semibold flex items-center space-x-2 text-green-900">
+    <span>🛒</span>
+    <span id="cartCount">0</span>
+  </a>
+  
+  <h1 class="text-3xl font-bold text-center text-green-800 mb-4">🛒 AyuCare Ayurvedic Store</h1>
+
+  <!-- 🔍 Search & Filter -->
+  <div class="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
+    <input id="searchInput" type="text" placeholder="Search products..." class="border border-green-300 px-4 py-2 w-full sm:w-1/2 rounded text-green-900" oninput="searchProducts()">
+    
+    <select id="categoryFilter" onchange="filterProducts()" class="border border-green-300 px-4 py-2 rounded w-full sm:w-1/4 text-green-900">
+      <option value="all">All Categories</option>
+      <option value="herbs">Herbs</option>
+      <option value="oils">Oils</option>
+      <option value="food">Health Foods</option>
+      <option value="tea">Teas</option>
+    </select>
+  </div>
+
+  <!-- 🛍️ Product Grid -->
+  <div id="productContainer" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+
+  <!-- ✅ Cart Message -->
+  <div id="cartMessage" class="fixed bottom-5 right-5 bg-green-200 text-green-900 px-4 py-2 rounded hidden shadow">
+    Item added to cart!
+  </div>
+
+  <script src="shop.js"></script>
+</body>
+</html>

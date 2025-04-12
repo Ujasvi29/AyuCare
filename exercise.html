@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Exercises & Homeopathy - AyuCare</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-green-50 text-green-900 p-6">
+  <h1 class="text-3xl font-bold text-center mb-6 text-green-800">🏃‍♀️ Exercises & Homeopathy</h1>
+
+  <div class="bg-green-100 p-6 rounded-xl shadow max-w-xl mx-auto border border-green-300">
+    <label for="condition" class="block text-lg font-semibold mb-2 text-green-900">Select your health condition:</label>
+    
+    <select id="condition" onchange="showRecommendations()" class="w-full border border-green-300 bg-white px-4 py-2 rounded mb-4 text-green-800">
+      <option value="">-- Choose a condition --</option>
+      <option value="backPain">Back Pain</option>
+      <option value="anxiety">Anxiety</option>
+      <option value="diabetes">Diabetes</option>
+      <option value="obesity">Obesity</option>
+      <option value="acne">Acne</option>
+      <option value="pcos">PCOS</option>
+    </select>
+
+    <div id="recommendations" class="mt-4 text-green-800 space-y-2"></div>
+  </div>
+
+  <script>
+    const exerciseData = {
+      backPain: [
+        { name: "Cat-Cow Stretch" },
+        { name: "Child’s Pose" },
+        { name: "Pelvic Tilt" },
+        { name: "Arnica 200C (Homeopathy)" }
+      ],
+      anxiety: [
+        { name: "Alternate Nostril Breathing" },
+        { name: "Yoga Nidra" },
+        { name: "Brisk Walking" },
+        { name: "Aconite 30C (Homeopathy)" }
+      ],
+      diabetes: [
+        { name: "Pranayama" },
+        { name: "Leg Raises" },
+        { name: "Kapalbhati" },
+        { name: "Syzygium Jambolanum (Homeopathy)" }
+      ],
+      obesity: [
+        { name: "Surya Namaskar (12 rounds)" },
+        { name: "Plank Hold" },
+        { name: "Walking 30 mins" },
+        { name: "Calcarea Carb 30C (Homeopathy)" }
+      ],
+      acne: [
+        { name: "Facial Yoga (Lion Pose)" },
+        { name: "Steam Inhalation" },
+        { name: "Gentle Neck Exercises" },
+        { name: "Berberis Aquifolium (Homeopathy)" }
+      ],
+      pcos: [
+        { name: "Butterfly Pose" },
+        { name: "Fertility Yoga Flow" },
+        { name: "15 min Power Walk" },
+        { name: "Pulsatilla 30C (Homeopathy)" }
+      ]
+    };
+
+    const exerciseSteps = {
+      "Cat-Cow Stretch": [
+        "Start on all fours with wrists under shoulders and knees under hips.",
+        "Inhale, arch your back, drop your belly, and lift your head (Cow Pose).",
+        "Exhale, round your spine, tuck your chin to your chest (Cat Pose).",
+        "Repeat slowly for 5–10 rounds with your breath."
+      ],
+      "Child’s Pose": [
+        "Kneel on the floor, big toes touching, knees wide apart.",
+        "Sit back on your heels and stretch your arms forward.",
+        "Rest your forehead on the mat and relax.",
+        "Hold for 1–3 minutes, breathing deeply."
+      ],
+      "Pelvic Tilt": [
+        "Lie on your back with knees bent, feet flat on the floor.",
+        "Engage your core and flatten your lower back against the floor.",
+        "Hold for a few seconds, then release.",
+        "Repeat 10–15 times."
+      ],
+      "Arnica 200C (Homeopathy)": [
+        "Used for pain and swelling from injuries or overexertion.",
+        "Take 5 pellets under the tongue or as directed by a homeopath.",
+        "Avoid food/drink 15 minutes before/after taking."
+      ],
+      "Alternate Nostril Breathing": [
+        "Sit comfortably with a straight spine.",
+        "Use your right thumb to close your right nostril.",
+        "Inhale through the left nostril.",
+        "Close the left nostril with your ring finger, release the right nostril, exhale.",
+        "Repeat on the other side. Continue for 5–10 minutes."
+      ],
+      "Yoga Nidra": [
+        "Lie on your back in a comfortable position.",
+        "Close your eyes and relax your body.",
+        "Follow guided meditation or focus awareness on each body part.",
+        "Stay aware but relaxed for 15–30 minutes."
+      ],
+      "Brisk Walking": [
+        "Wear comfortable shoes and clothing.",
+        "Walk at a steady pace, faster than a stroll but not too fast.",
+        "Swing your arms and keep your posture upright.",
+        "Aim for 30 minutes daily."
+      ],
+      "Aconite 30C (Homeopathy)": [
+        "Used for sudden anxiety or shock.",
+        "Take 5 pellets under the tongue or as prescribed.",
+        "Avoid eating/drinking 15 minutes before/after."
+      ],
+      "Pranayama": [
+        "Sit cross-legged with spine straight.",
+        "Breathe deeply through your nose, slowly and mindfully.",
+        "Practice techniques like Anulom Vilom or Bhramari.",
+        "Do this for 5–15 minutes daily."
+      ],
+      "Leg Raises": [
+        "Lie flat on your back with legs extended.",
+        "Keep hands under hips for support.",
+        "Raise both legs to 90 degrees without bending knees.",
+        "Lower slowly and repeat 10–15 times."
+      ],
+      "Kapalbhati": [
+        "Sit in a cross-legged posture with straight spine.",
+        "Inhale normally and exhale forcefully through the nose.",
+        "Focus on abdominal contractions.",
+        "Perform 3 rounds of 30 strokes, resting between rounds."
+      ],
+      "Syzygium Jambolanum (Homeopathy)": [
+        "Used in managing high blood sugar levels.",
+        "Take as advised by a certified homeopath.",
+        "Usually in drop or tablet form, before meals."
+      ],
+      "Surya Namaskar (12 rounds)": [
+        "Start in mountain pose, inhale and raise arms.",
+        "Exhale and bend forward, hands to floor.",
+        "Step back to plank, lower into cobra or upward dog.",
+        "Exhale to downward dog, step forward, rise back up.",
+        "One round = right and left side. Repeat 12 rounds."
+      ],
+      "Plank Hold": [
+        "Start in push-up position, arms straight under shoulders.",
+        "Keep body in a straight line from head to heels.",
+        "Engage core and hold the position.",
+        "Begin with 20–30 seconds, work up to 1–2 minutes."
+      ],
+      "Walking 30 mins": [
+        "Walk at a brisk pace outdoors or on a treadmill.",
+        "Maintain good posture and swing your arms.",
+        "Hydrate before and after.",
+        "Aim for consistency daily."
+      ],
+      "Calcarea Carb 30C (Homeopathy)": [
+        "Used for weight-related metabolic issues.",
+        "Take 5 pellets as directed by a homeopath.",
+        "Maintain regular usage over weeks for effect."
+      ],
+      "Facial Yoga (Lion Pose)": [
+        "Sit in kneeling position or comfortably.",
+        "Inhale, then exhale while opening your mouth wide.",
+        "Stick out your tongue, stretch facial muscles.",
+        "Make a roaring sound softly. Repeat 3–5 times."
+      ],
+      "Steam Inhalation": [
+        "Boil water and pour it into a bowl.",
+        "Lean over the bowl, cover your head with a towel.",
+        "Inhale steam deeply for 5–10 minutes.",
+        "Optional: Add eucalyptus or essential oil."
+      ],
+      "Gentle Neck Exercises": [
+        "Sit or stand upright, relax your shoulders.",
+        "Slowly turn your head side to side.",
+        "Tilt ear to shoulder on both sides.",
+        "Do neck rolls gently. Repeat each 5–10 times."
+      ],
+      "Berberis Aquifolium (Homeopathy)": [
+        "Used for clear skin and acne treatment.",
+        "Apply tincture topically or take pellets as directed.",
+        "Avoid other strong-smelling substances around usage."
+      ],
+      "Butterfly Pose": [
+        "Sit on the floor with legs extended.",
+        "Bend knees and bring soles of feet together.",
+        "Hold your feet with hands, keep spine straight.",
+        "Flap your knees gently up and down like wings.",
+        "Do this for 2–3 minutes."
+      ],
+      "Fertility Yoga Flow": [
+        "Includes gentle stretches: Butterfly, Bridge, Supine Twist.",
+        "Focus on breathing and relaxation.",
+        "Hold each posture for 5–10 breaths.",
+        "Avoid overstretching. Practice daily or as guided."
+      ],
+      "15 min Power Walk": [
+        "Walk briskly for 15 minutes.",
+        "Maintain upright posture and steady pace.",
+        "Breathe deeply and consistently.",
+        "Do it daily for hormonal balance."
+      ],
+      "Pulsatilla 30C (Homeopathy)": [
+        "Used for hormonal and mood imbalances in women.",
+        "Take 5 pellets under tongue as directed.",
+        "Follow consistent dosing as per guidance."
+      ]
+    };
+
+    function showRecommendations() {
+      const condition = document.getElementById("condition").value;
+      const output = document.getElementById("recommendations");
+      output.innerHTML = "";
+
+      if (exerciseData[condition]) {
+        let html = `<h2 class="text-xl font-semibold mb-2">Recommended:</h2><div class="space-y-4">`;
+
+        html += exerciseData[condition].map(item => {
+          const steps = exerciseSteps[item.name] || ["Instructions not available."];
+          return `
+            <div class="bg-white border border-green-200 p-4 rounded shadow">
+              <h3 class="text-green-900 font-bold mb-1">${item.name}</h3>
+              <ul class="list-disc list-inside text-sm text-gray-700">
+                ${steps.map(step => `<li>${step}</li>`).join('')}
+              </ul>
+            </div>
+          `;
+        }).join('');
+
+        html += `</div>`;
+        output.innerHTML = html;
+      }
+    }
+  </script>
+</body>
+</html>

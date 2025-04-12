@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AyuCare - Food Tracker</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-green-50 text-green-900 p-6">
+  <header class="text-center mb-6">
+    <h1 class="text-3xl font-bold">🍽️ AyuCare Food & Diet Tracker</h1>
+    <p class="text-md text-green-700">Track your daily meals the Ayurvedic way</p>
+  </header>
+
+  <div class="bg-white p-6 rounded shadow max-w-xl mx-auto">
+    <form id="foodForm" onsubmit="event.preventDefault(); saveEntry();">
+      <label for="logDate" class="block font-semibold mb-1">Select Date:</label>
+      <input type="date" id="logDate" required class="w-full mb-4 border px-4 py-2 rounded"/>
+
+      <label for="breakfast" class="block font-semibold mb-1">Breakfast:</label>
+      <input type="text" id="breakfast" class="w-full mb-4 border px-4 py-2 rounded"/>
+
+      <label for="lunch" class="block font-semibold mb-1">Lunch:</label>
+      <input type="text" id="lunch" class="w-full mb-4 border px-4 py-2 rounded"/>
+
+      <label for="dinner" class="block font-semibold mb-1">Dinner:</label>
+      <input type="text" id="dinner" class="w-full mb-4 border px-4 py-2 rounded"/>
+
+      <label for="waterIntake" class="block font-semibold mb-1">Water Intake (glasses):</label>
+      <input type="number" id="waterIntake" class="w-full mb-4 border px-4 py-2 rounded"/>
+
+      <div class="flex justify-between gap-2">
+        <button type="submit" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded shadow">
+          ✅ Save Entry
+        </button>
+        <button onclick="syncWithCalendar()" type="button" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded shadow">
+          🗓️ Sync to Calendar
+        </button>
+        <button onclick="viewLog()" type="button" class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded shadow">
+          📊 View Full Log
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <div id="logDisplay" class="mt-6 max-w-xl mx-auto bg-white p-4 rounded shadow hidden"></div>
+
+  <script src="foodtracker.js"></script>
+</body>
+</html>

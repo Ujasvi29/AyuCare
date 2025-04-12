@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>📋 Recommendation - AyuCare</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-green-50 text-green-900 p-6">
+  <h1 class="text-3xl font-bold text-center mb-6 text-green-800">📋 Recommendation</h1>
+
+  <!-- 🌿 Daily Tip -->
+  <section class="bg-white p-4 rounded shadow mb-6">
+    <div class="flex justify-between items-center">
+      <h2 class="text-2xl font-semibold mb-2 text-green-700">🌿 Daily Ayurvedic Tip</h2>
+      <button onclick="showNewTip()" class="bg-green-300 hover:bg-green-400 px-4 py-2 rounded font-semibold text-sm text-green-900">🔄 New Tip</button>
+    </div>
+    <p id="dailyTip" class="text-green-800 italic mt-2"></p>
+  </section>
+
+  <!-- 📝 Symptom Checker -->
+  <section class="bg-white p-4 rounded shadow mb-6">
+    <h2 class="text-2xl font-semibold mb-4 text-green-700">🤒 Enter Your Symptom</h2>
+    <input type="text" id="symptomInput" placeholder="e.g. headache, cough" class="w-full border border-green-300 px-4 py-2 mb-4 rounded text-green-900">
+    <button onclick="recommendAyurvedicItems()" class="bg-green-300 hover:bg-green-400 px-6 py-2 rounded font-bold text-green-900">Get Recommendation</button>
+    <div id="recommendationResult" class="mt-4 text-lg text-green-800"></div>
+    <button onclick="logSymptom()" class="mt-2 bg-green-200 hover:bg-green-300 px-4 py-1 rounded text-sm text-green-900">📝 Log This</button>
+  </section>
+
+  <!-- 📜 Log Viewer -->
+  <section class="bg-white p-4 rounded shadow mb-6">
+    <div class="flex justify-between items-center mb-4">
+      <h2 class="text-2xl font-semibold text-green-700">📋 Your Symptom Log</h2>
+      <button onclick="clearSymptomLog()" class="bg-red-200 hover:bg-red-300 text-red-800 px-4 py-1 rounded text-sm">🧹 Clear Log</button>
+    </div>
+    <ul id="symptomLog" class="list-disc pl-5 space-y-2 text-green-800"></ul>
+  </section>
+
+  <script src="food.js"></script>
+</body>
+</html>
+

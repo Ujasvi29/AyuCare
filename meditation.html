@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meditation - AyuCare</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-green-50 text-green-900 min-h-screen p-6">
+  <h1 class="text-3xl font-bold text-center text-green-800 mb-6">🧘‍♂️ AyuCare Meditation Zone</h1>
+
+  <div class="mb-4 flex justify-center gap-4">
+    <button onclick="filterMeditation('all')" class="bg-green-200 hover:bg-green-300 text-green-900 px-4 py-2 rounded font-semibold">All</button>
+    <button onclick="filterMeditation('sleep')" class="bg-green-200 hover:bg-green-300 text-green-900 px-4 py-2 rounded font-semibold">Sleep</button>
+    <button onclick="filterMeditation('focus')" class="bg-green-200 hover:bg-green-300 text-green-900 px-4 py-2 rounded font-semibold">Focus</button>
+    <button onclick="filterMeditation('anxiety')" class="bg-green-200 hover:bg-green-300 text-green-900 px-4 py-2 rounded font-semibold">Anxiety</button>
+  </div>
+
+  <div id="meditationContainer" class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+    <!-- Meditation content loads here -->
+  </div>
+  <!-- Breathing Exercise Section -->
+<!-- Breathing Timer -->
+<!-- Breathing Timer -->
+<div class="bg-white border border-green-300 rounded-2xl p-6 shadow mb-6 text-center">
+  <h2 class="text-xl font-semibold text-green-800 mb-4">🧘‍♀️ Breathing Exercise</h2>
+  <div id="phase-label" class="text-2xl font-bold text-green-700 mb-2">Ready</div>
+  <div id="countdown" class="text-6xl font-bold text-green-900">3</div>
+  <div class="mt-4 flex justify-center gap-4">
+    <button id="start-breathing" class="bg-green-600 text-white px-4 py-2 rounded mr-2">Start Breathing</button>
+    <button id="stop-breathing" class="bg-red-600 text-white px-4 py-2 rounded">Stop</button>
+
+  </div>
+</div>
+
+<!-- Meditation Video Section -->
+<div class="bg-white border border-green-300 rounded-2xl p-6 shadow text-center">
+  <h2 class="text-xl font-semibold text-green-800 mb-4">🎧 Guided Meditation Videos</h2>
+  <div id="videoContainer" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+</div>
+
+
+</script>
+
+  <script src="meditation.js"></script>
+</body>
+</html>
